@@ -11,8 +11,15 @@ class Farm(Model):
 
 class User(Model):
     id = fields.IntField(pk=True)
-    tg_username = fields.CharField(max_length=100, unique=True, null=True)
-    tg_userid = fields.IntField(unique=True, null=True)
+    # Store fields as in https://core.telegram.org/bots/api#user
+    # Even though username is optional in Telegram, we require this data,
+    # to able to locate user from outside (we cannot find Telegram user by ID or phone number)
+    username = fields.CharField(max_length=100, unique=True)
+    telegram_id = fields.IntField(unique=True, null=True)
+    first_name = fields.CharField(max_length=200, null=True)
+    last_name = fields.CharField(max_length=200, null=True)
+    language_code = fields.CharField(max_length=16, null=True)
+    # Private info for our system
     is_superuser = fields.BooleanField(default=True)
     farms = fields.ManyToManyField('models.Farm', related_name='users', through='membership')
 
