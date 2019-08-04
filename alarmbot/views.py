@@ -1,12 +1,15 @@
 from logbook import Logger
 from tortoise import Tortoise
+from tortoise.exceptions import DoesNotExist
+from aiohttp import web
 from aiohttp.web import View, view, json_response
 from webargs import fields
 from webargs.aiohttpparser import use_args
+from pydantic.error_wrappers import ValidationError
 
 from .common import app, bot
 from .models import User, init_db
-
+from .serializers import UserSerializer
 
 logger = Logger(__name__)
 
@@ -19,28 +22,53 @@ async def close_orm(app):
     await Tortoise.close_connections()
 
 
-class SimpleView(View):
+class UserView(View):
     async def get(self):
-        logger.info('Request {}', self.request)
         username = self.request.match_info['username']
-        user = await User.get(tg_username=username)
+        try:
+            user = await User.get(username=username)
+        except DoesNotExist:
+            return web.HTTPNotFound()
         logger.info('User {}', user)
-        logger.info('To send message to {}', user.tg_userid)
-        await bot.send_message(user.tg_userid, f'Hello {user.tg_username}')
-        return json_response(f'Hello {user.tg_username}')
+        logger.info('To send message to {}', user.telegram_id)
+        keys = UserSerializer._field_names()
+        return json_response({k: getattr(user, k) for k in keys})
 
-    @use_args({'message': fields.Str(required=True)})
-    async def post(self, args):
-        message = args['message']
-        username = self.request.match_info['username']
-        user = await User.get(tg_username=username)
-        logger.info('User {}', user)
-        logger.info('To send message to {}', user.tg_userid)
-        await bot.send_message(user.tg_userid, message)
-        return json_response(message)
+
+async def create_user(request):
+    indata = await request.json()
+    logger.debug('Post data" {}', indata)
+    try:
+        serializer = UserSerializer(indata)
+    except ValidationError as e:
+        logger.error('{}', e)
+        return web.HTTPBadRequest()
+    cdata = serializer.as_dict()
+    username = cdata['username']
+    try:
+        user = await User.get(username=username)
+        return web.HTTPFound(f'/users/{username}')
+    except DoesNotExist:
+        user = await User.create(**cdata)
+    keys = serializer._field_names()
+    return json_response({k: getattr(user, k) for k in keys},
+                         status=201)
+
+
+@use_args({'message': fields.Str(required=True)})
+async def post_user_message(request, args):
+    message = args['message']
+    username = request.match_info['username']
+    user = await User.get(username=username)
+    logger.info('User {}', user)
+    logger.info('To send message to {}', user.telegram_id)
+    await bot.send_message(user.telegram_id, message)
+    return json_response(message)
 
 
 app.on_startup.append(init_orm)
 app.on_cleanup.append(close_orm)
 
-app.add_routes([view('/{username}', SimpleView)])
+app.add_routes([view('/users/{username}', UserView),
+                web.post('/users/', create_user),
+                web.post('/users/{username}/message', post_user_message)])
