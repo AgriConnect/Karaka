@@ -1,3 +1,5 @@
 [default]
 db_name = 'alarmbot'
 TELEGRAM_TOKEN = ''
+
+API_USERS = []

@@ -15,6 +15,7 @@ from alarmbot.receptionist import dp
 # Configure logging
 logger = Logger(__name__)
 logger.handlers.append(ColorizedStderrHandler())
+DEFAULT_SOCK_PATH = '/run/alarmbot/api.sock'
 
 
 if __name__ == '__main__':
@@ -24,4 +25,4 @@ if __name__ == '__main__':
     executor = Executor(dp, skip_updates=True, loop=loop)
     logger.info('{}', executor)
     executor.set_webhook(web_app=app)
-    executor.run_app(port=8000)
+    executor.run_app(path=DEFAULT_SOCK_PATH)

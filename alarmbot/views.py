@@ -6,7 +6,9 @@ from aiohttp.web import View, view, json_response
 from webargs import fields
 from webargs.aiohttpparser import use_args
 from pydantic.error_wrappers import ValidationError
+from aiohttp_basicauth_middleware import basic_auth_middleware
 
+from .conf import config
 from .common import app, bot
 from .models import User, init_db
 from .serializers import UserSerializer
@@ -68,6 +70,13 @@ async def post_user_message(request, args):
 
 app.on_startup.append(init_orm)
 app.on_cleanup.append(close_orm)
+
+app.middlewares.append(
+    basic_auth_middleware(
+        ('/users',),
+        dict(config.API_USERS)
+    )
+)
 
 app.add_routes([view('/users/{username}', UserView),
                 web.post('/users/', create_user),

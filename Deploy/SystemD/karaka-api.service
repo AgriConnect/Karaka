@@ -1,0 +1,18 @@
+[Unit]
+Description=AlarmBot's API server
+After=network-online.target
+
+[Service]
+User=web
+Group=web
+
+Type=simple
+WorkingDirectory=/home/web/AlarmBot/alarmbot
+RuntimeDirectory=alarmbot
+ExecStart=/home/web/AlarmBot/venv/bin/python3 runserver.py
+TimeoutStopSec=20
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
