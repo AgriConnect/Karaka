@@ -1,0 +1,27 @@
+
+# Default server configuration
+#
+server {
+	root /var/www/html;
+	sendfile on;
+
+	index index.html index.htm;
+
+	server_name _;
+	access_log /var/log/nginx/karaka/access.log;
+	error_log /var/log/nginx/karaka/error.log;
+
+	location / {
+		include proxy_params;
+		proxy_pass http://unix:/run/alarmbot/api.sock;
+		client_max_body_size 2m;
+	}
+
+	location /robots.txt {
+		alias /var/lib/nginx/robots.txt;
+	}
+
+	listen 443 ssl http2;
+	ssl_certificate /home/web/.acme.sh/karaka.agriconnect.vn/fullchain.cer;
+	ssl_certificate_key /home/web/.acme.sh/karaka.agriconnect.vn/karaka.agriconnect.vn.key;
+}
