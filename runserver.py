@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import logging
 import asyncio
 
@@ -32,6 +33,7 @@ def main(socket, port):
         executor.run_app(port=port)
     else:
         executor.run_app(path=socket)
+        os.chmod(socket, 0o666)
 
 
 if __name__ == '__main__':
