@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import os
-import time
 import logging
 import asyncio
 
@@ -21,7 +19,7 @@ logger.handlers.append(ColorizedStderrHandler())
 @click.command()
 @click.option('-s', '--socket', type=click.Path())
 @click.argument('port', default=8006, type=int)
-def main(socket, port):
+def main(socket_path, port):
     from alarmbot.views import app
     from alarmbot.receptionist import dp
     logger.level = logbook.DEBUG
@@ -30,16 +28,10 @@ def main(socket, port):
     executor = Executor(dp, skip_updates=True, loop=loop)
     logger.info('{}', executor)
     executor.set_webhook(web_app=app)
-    if not socket:
+    if not socket_path:
         executor.run_app(port=port)
     else:
-        executor.run_app(path=socket)
-        # Try to fix file permission
-        for i in range(5):
-            if os.path.exists(socket):
-                os.chmod(socket, 0o666)
-                break
-            time.sleep(1)
+        executor.run_app(path=socket_path)
 
 
 if __name__ == '__main__':
