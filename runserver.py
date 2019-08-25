@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import time
 import logging
 import asyncio
 
@@ -33,7 +34,12 @@ def main(socket, port):
         executor.run_app(port=port)
     else:
         executor.run_app(path=socket)
-        os.chmod(socket, 0o666)
+        # Try to fix file permission
+        for i in range(5):
+            if os.path.exists(socket):
+                os.chmod(socket, 0o666)
+                break
+            time.sleep(1)
 
 
 if __name__ == '__main__':
