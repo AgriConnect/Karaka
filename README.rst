@@ -4,13 +4,13 @@ Telegram bot to send message to a user via Telegram.
 Deploy
 ======
 
-- Run
+- Run::
 
     ./runbot.py
 
 to run Telegram bot (which chats with user)
 
-- Run
+- Run::
 
     ./runserver.py
 
@@ -31,9 +31,44 @@ Add to *.secrets.toml* file. Example
     ]
 
 
-# Translation
+Translation
+===========
 
 .. code-block::
 
     pybabel extract alarmbot/*.py -o locales/alarmbot.pot
     pybabel compile -d locales -l vi -D alarmbot
+
+API
+===
+
+Create user
+-----------
+
+.. code-block::
+
+    POST /users/
+
+.. code-block:: python
+
+    {
+        'username': 'someone',
+        'first_name': '',
+        'last_name': '',
+        'language_code': 'vi'
+    }
+
+with ``username`` being Telegram username.
+
+Send message to user
+--------------------
+
+.. code-block::
+
+    POST /users/[username]/message
+
+.. code-block:: python
+
+    {
+        'message': 'Your farm is on fire!'
+    }
