@@ -9,7 +9,11 @@ from alarmbot.models import init_db
 async def main():
     await init_db()
     # Generate the schema
+    conn = Tortoise.get_connection('default')
+    await conn.execute_query('CREATE EXTENSION IF NOT EXISTS citext')
     await Tortoise.generate_schemas()
+    sql = 'ALTER TABLE "user" ALTER COLUMN username TYPE CITEXT'
+    await conn.execute_query(sql)
 
 
 if __name__ == '__main__':
