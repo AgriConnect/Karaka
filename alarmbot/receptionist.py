@@ -16,8 +16,7 @@ async def salute(message: types.Message):
              'From now on you will receive alarm about your farm condition.')
     await bot.send_message(message.chat.id, mesg.format(name=user.first_name))
     # Store user info
-    logger.info('Telegram username: {}', user.username)
-    logger.info('Telegram user ID: {}', user.id)
+    logger.info('Telegram username: {}, ID {}', user.username, user.id)
     if user.username:
         u, created = await User.get_or_create(username=user.username)
         u.telegram_id = user.id
