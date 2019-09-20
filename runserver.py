@@ -17,7 +17,7 @@ logger.handlers.append(ColorizedStderrHandler())
 
 
 @click.command()
-@click.option('-s', '--socket', type=click.Path())
+@click.option('-s', '--socket-path', type=click.Path())
 @click.argument('port', default=8006, type=int)
 def main(socket_path, port):
     from alarmbot.views import app
