@@ -57,14 +57,15 @@ async def create_user(request):
                          status=201)
 
 
-@use_args({'message': fields.Str(required=True)})
+@use_args({'message': fields.Str(required=True), 'parse_mode': fields.Str()})
 async def post_user_message(request, args):
     message = args['message']
     username = request.match_info['username']
     user = await User.get(username=username)
     logger.info('User {}', user)
     logger.info('To send message to {}', user.telegram_id)
-    await bot.send_message(user.telegram_id, message)
+    parse_mode = args['parse_mode']
+    await bot.send_message(user.telegram_id, message, parse_mode)
     return json_response(message)
 
 
