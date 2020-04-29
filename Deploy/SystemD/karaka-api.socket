@@ -1,0 +1,10 @@
+[Unit]
+Description=AlarmBot's API server socket
+
+[Socket]
+ListenStream=/run/alarmbot/api.sock
+SocketUser=web
+SocketGroup=web
+
+[Install]
+WantedBy=sockets.target

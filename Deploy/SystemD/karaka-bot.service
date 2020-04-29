@@ -1,6 +1,6 @@
 [Unit]
 Description=AlarmBot's Telegram bot
-After=network-online.target
+After=network-online.target karaka-api.socket
 
 [Service]
 User=web
