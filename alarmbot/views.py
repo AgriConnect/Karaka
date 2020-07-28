@@ -64,7 +64,7 @@ async def post_user_message(request, args):
     user = await User.get(username=username)
     logger.info('User {}', user)
     logger.info('To send message to {}', user.telegram_id)
-    parse_mode = args['parse_mode']
+    parse_mode = args.get('parse_mode')
     await bot.send_message(user.telegram_id, message, parse_mode)
     return json_response(message)
 
