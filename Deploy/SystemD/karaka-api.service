@@ -9,6 +9,7 @@ Group=web
 Type=simple
 WorkingDirectory=/home/web/AlarmBot/alarmbot
 RuntimeDirectory=alarmbot
+RuntimeDirectoryPreserve=yes
 ExecStart=/home/web/AlarmBot/venv/bin/python3 runserver.py -s /run/alarmbot/api.sock
 TimeoutStopSec=20
 Restart=on-failure
