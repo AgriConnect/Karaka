@@ -53,7 +53,7 @@ to launch REST API server, for other application to send message to user
 
 TelegramBot
 ===========
-In your telegram , we need create telegrambot to get Token in alarmbot projects.
+In your Telegram , we need create TelegramBot to get token in AlarmBot projects.
 Search `BotFather` in search telegram and start. `/help` instruct to create bot and get Token.
 
 
@@ -83,7 +83,6 @@ Translation
 
 API
 ===
-We need  API tools in order to test API in projects.In this project , i use `Postman <https://www.postman.com/downloads/>`_ to test API.
 
 Create user
 -----------
