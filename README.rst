@@ -1,3 +1,4 @@
+======
 Karaka
 ======
 
@@ -13,12 +14,15 @@ Setup for development
 
 - Requires python 3.7+
 - create a python virtual environment for project
-- Install dependency package from Ubuntu repository::
+- Install dependency package from Ubuntu repository
+
+  .. code-block:: sh
 
     sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib
 
-create a database name ``alarmbot`` in PostgreSQL.To ease development, we connect PostgreSQL via Unix socket. This method let you access database without specifying username and password in project's config.
-::
+- Create a database name ``alarmbot`` in PostgreSQL. To ease development, we connect PostgreSQL via Unix socket. This method let you access database without specifying username and password in project's config.
+
+  .. code-block:: sh
 
     sudo -u postgres createuser --superuser $USER
 
@@ -26,33 +30,36 @@ create a database name ``alarmbot`` in PostgreSQL.To ease development, we connec
 
 - Install `Poetry <https://python-poetry.org/>`_ . We use it to manage Python dependencies for this project.
 
--Create a Python virtual environment for this project. There are many tools for this. You can also use Poetry (but please not use Pipenv).
+- Create a Python virtual environment for this project. There are many tools for this. You can also use Poetry (but please not use Pipenv).
 
--Go to the source folder, activate the virtual environment.
-::
+- Go to the source folder, activate the virtual environment.
+
+  .. code-block:: sh
 
     (venv)$ poetry install --no-root
 
 
-- to install Python projects.
-
-Telegram bot to send message to a user via Telegram.
+  to install Python packages.
 
 
 Deploy
 ~~~~~~
 
-- Run::
+- Run:
+
+  .. code-block:: sh
 
     ./runbot.py
 
-to run Telegram bot (which chats with user)
+  to run Telegram bot (which chats with user)
 
-- Run::
+- Run:
+
+  .. code-block:: sh
 
     ./runserver.py
 
-to launch REST API server, for other application to send message to user
+  to launch REST API server, for other application to send message to user
 
 
 Configuration
