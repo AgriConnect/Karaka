@@ -1,13 +1,16 @@
-AlarmBot
-========
+Karaka
+======
+
 Stack
-=====
+~~~~~
+
 - Python 3
 - Django 3.0+ as backend framework
 - PostgreSQL for database
 
 Setup for development
-=====================
+~~~~~~~~~~~~~~~~~~~~~
+
 - Requires python 3.7+
 - create a python virtual environment for project
 - Install dependency package from Ubuntu repository::
@@ -37,7 +40,7 @@ Telegram bot to send message to a user via Telegram.
 
 
 Deploy
-======
+~~~~~~
 
 - Run::
 
@@ -51,14 +54,18 @@ to run Telegram bot (which chats with user)
 
 to launch REST API server, for other application to send message to user
 
-TelegramBot
-===========
-In your Telegram , we need create TelegramBot to get token in AlarmBot projects.
-Search `BotFather` in search telegram and start. `/help` instruct to create bot and get Token.
+
+Configuration
+~~~~~~~~~~~~~
+
+Telegram bot
+------------
+
+Register a Telegram bot to get token.
 
 
 Authentication
-==============
+--------------
 
 Add to *.secrets.toml* file. Example
 
