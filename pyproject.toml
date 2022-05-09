@@ -14,7 +14,7 @@ pydantic = "^0.31.1"
 aiohttp-basicauth-middleware = "^1.1"
 click = "^7.0"
 tortoise-orm = "^0.13.5"
-aiogram = "^2.3"
+aiogram = "^2.20"
 asyncpg = "^0.25.0"
 
 [tool.poetry.dev-dependencies]
