@@ -2,7 +2,7 @@ from logbook import Logger
 from tortoise import Tortoise
 from tortoise.exceptions import DoesNotExist
 from aiohttp import web
-from aiohttp.web import View, view, json_response
+from aiohttp.web import View, view, json_response, HTTPNotFound
 from webargs import fields
 from webargs.aiohttpparser import use_args
 from pydantic.error_wrappers import ValidationError
@@ -61,7 +61,11 @@ async def create_user(request):
 async def post_user_message(request, args):
     message = args['message']
     username = request.match_info['username']
-    user = await User.get(username=username)
+    try:
+        user = await User.get(username=username)
+    except DoesNotExist:
+        logger.info('User {} not found', username)
+        raise HTTPNotFound(reason='User not found')
     logger.info('User {}', user)
     logger.info('To send message to {}', user.telegram_id)
     parse_mode = args.get('parse_mode')
