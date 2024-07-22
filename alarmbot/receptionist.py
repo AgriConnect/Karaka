@@ -6,6 +6,7 @@ from aiogram.types import Message
 from aiogram.utils.i18n import gettext as _
 
 from .consts import WEBHOOK_PATH, BASE_WEBHOOK_URL
+from .conf import config
 from .common import dp, i18n_middleware
 from .models import User
 
@@ -41,5 +42,5 @@ async def salute(message: Message):
 
 async def on_startup(bot: Bot):
     url = urljoin(BASE_WEBHOOK_URL, WEBHOOK_PATH)
-    await bot.set_webhook(url)
+    await bot.set_webhook(url, secret_token=config.WEBHOOK_SECRET)
     logger.info('Set webhook {} for bot', url)

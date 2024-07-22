@@ -25,10 +25,11 @@ logger.handlers.append(ColorizedStderrHandler())
 def main(socket_path, port):
     from alarmbot.common import bot
     from alarmbot.views import app
-    from alarmbot.receptionist import dp, on_startup
+    from alarmbot.receptionist import dp, on_startup, router
     
     logger.level = logbook.DEBUG
     logging.basicConfig(level=logging.INFO)
+    dp.include_router(router)
     dp.startup.register(on_startup)
     webhook_request_handler = SimpleRequestHandler(dispatcher=dp, bot=bot, secret_token=config.WEBHOOK_SECRET)
     # Register webhook handler on application
