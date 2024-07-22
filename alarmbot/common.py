@@ -3,7 +3,8 @@ from pathlib import Path
 from logbook.compat import LoggingHandler
 from aiohttp.web import Application
 from aiogram import Bot, Dispatcher
-from aiogram.contrib.middlewares.i18n import I18nMiddleware
+from aiogram.utils.i18n import I18n
+from aiogram.utils.i18n.middleware import SimpleI18nMiddleware
 
 from .conf import config
 
@@ -15,8 +16,8 @@ app = Application()
 
 # Initialize bot and dispatcher
 bot = Bot(token=config.TELEGRAM_TOKEN)
-dp = Dispatcher(bot)
-i18n = I18nMiddleware(PROJECT_NAME, LOCALES_DIR)
-dp.middleware.setup(i18n)
+dp = Dispatcher()
+i18n = I18n(path=LOCALES_DIR, default_locale='en', domain=PROJECT_NAME)
+i18n_middleware = SimpleI18nMiddleware(i18n)
 
 LoggingHandler().push_application()

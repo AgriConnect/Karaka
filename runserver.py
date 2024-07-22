@@ -6,8 +6,11 @@ import asyncio
 import click
 import logbook
 from logbook import Logger
-from aiogram.utils.executor import Executor
+from aiohttp import web
+from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 
+from alarmbot.consts import WEBHOOK_PATH
+from alarmbot.conf import config
 from alarmbot.loghandlers import ColorizedStderrHandler
 
 
@@ -20,18 +23,26 @@ logger.handlers.append(ColorizedStderrHandler())
 @click.option('-s', '--socket-path', type=click.Path())
 @click.argument('port', default=8006, type=int)
 def main(socket_path, port):
+    from alarmbot.common import bot
     from alarmbot.views import app
-    from alarmbot.receptionist import dp
+    from alarmbot.receptionist import dp, on_startup
+    
     logger.level = logbook.DEBUG
     logging.basicConfig(level=logging.INFO)
-    loop = asyncio.get_event_loop()
-    executor = Executor(dp, skip_updates=True, loop=loop)
-    logger.info('{}', executor)
-    executor.set_webhook(web_app=app)
-    if not socket_path:
-        executor.run_app(port=port)
+    dp.startup.register(on_startup)
+    webhook_request_handler = SimpleRequestHandler(dispatcher=dp, bot=bot, secret_token=config.WEBHOOK_SECRET)
+    # Register webhook handler on application
+    webhook_request_handler.register(app, path=WEBHOOK_PATH)
+    logger.info('Registered webwook handlers at {} for bot.', WEBHOOK_PATH)
+    # Mount dispatcher startup and shutdown hooks to aiohttp application
+    setup_application(app, dp, bot=bot)
+    token_head = bot.token.split(':')[0]
+    if socket_path:
+        logger.info('To run web application for bot {}, listening at {}', token_head, socket_path)
+        web.run_app(app, path=socket_path)
     else:
-        executor.run_app(path=socket_path)
+        logger.info('To run web application for bot {}, listening on port {}', token_head, port)
+        web.run_app(app, port=port)
 
 
 if __name__ == '__main__':

@@ -5,7 +5,7 @@ from aiohttp import web
 from aiohttp.web import View, view, json_response, HTTPNotFound
 from webargs import fields
 from webargs.aiohttpparser import use_args
-from pydantic.error_wrappers import ValidationError
+from pydantic import ValidationError
 from aiohttp_basicauth_middleware import basic_auth_middleware
 
 from .conf import config
