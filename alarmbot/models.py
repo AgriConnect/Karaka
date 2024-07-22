@@ -23,6 +23,9 @@ class User(Model):
     is_superuser = fields.BooleanField(default=True)
     farms = fields.ManyToManyField('models.Farm', related_name='users', through='membership')
 
+    def __str__(self):
+        return self.username or str(self.id)
+
 
 async def init_db():
     ttconfig = {

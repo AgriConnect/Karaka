@@ -32,7 +32,6 @@ class UserView(View):
         except DoesNotExist:
             return web.HTTPNotFound()
         logger.info('User {}', user)
-        logger.info('To send message to {}', user.telegram_id)
         keys = UserSerializer._field_names()
         return json_response({k: getattr(user, k) for k in keys})
 
