@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
+import os
 import logging
 import asyncio
+import socket
 
 import click
 import logbook
@@ -39,8 +41,16 @@ def main(socket_path, port):
     setup_application(app, dp, bot=bot)
     token_head = bot.token.split(':')[0]
     if socket_path:
+        # Make socket file writable by Nginx
+        sk = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        try:
+            os.remove(socket_path)
+        except FileNotFoundError:
+            pass
+        sk.bind(socket_path)
+        os.chmod(socket_path, 0o664)
         logger.info('To run web application for bot {}, listening at {}', token_head, socket_path)
-        web.run_app(app, path=socket_path)
+        web.run_app(app, sock=sk)
     else:
         logger.info('To run web application for bot {}, listening on port {}', token_head, port)
         web.run_app(app, port=port)
