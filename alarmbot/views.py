@@ -3,6 +3,7 @@ from http import HTTPStatus
 from logbook import Logger
 from tortoise import Tortoise
 from tortoise.exceptions import DoesNotExist
+from aiohttp import web
 from aiohttp.web import (
     Response,
     Request,
@@ -68,9 +69,11 @@ async def post_user_message(request: Request) -> Response:
         user = await User.get(username=username)
     except DoesNotExist:
         logger.info('User {} not found', username)
-        raise HTTPNotFound(reason='User not found')
-    logger.info('User {}', user)
-    logger.info('To send message to {}', user.telegram_id)
+        raise HTTPNotFound(reason=f'User {username} is not found')
+    if not user.telegram_id:
+        logger.warning('User {} is missing Telegram ID. Skip.', username)
+        return web.json_response({}, status=HTTPStatus.OK)
+    logger.info('To send message to Telegram ID {} ({})', user.telegram_id, username)
     await bot.send_message(user.telegram_id, message, parse_mode=indata.parse_mode)
     return json_response(indata)
 
