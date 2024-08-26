@@ -7,7 +7,7 @@ from aiogram.utils.i18n import gettext as _
 
 from .consts import WEBHOOK_PATH, BASE_WEBHOOK_URL
 from .conf import config
-from .common import dp, i18n_middleware
+from .common import i18n_middleware
 from .models import User
 
 

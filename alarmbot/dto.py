@@ -16,3 +16,8 @@ class UserInput(BaseModel):
     first_name: Annotated[str | None, MaxLen(200)]
     last_name : Annotated[str | None, MaxLen(200)]
     language_code : Annotated[str | None, MaxLen(16)]
+
+
+class MessagePostInput(BaseModel):
+    message: str
+    parse_mode: str | None = None
