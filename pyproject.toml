@@ -17,11 +17,15 @@ aiogram = "^3.10.0"
 asyncpg = "^0.29.0"
 aiohttp-pydantic = "^2.2.1"
 chameleon-log = "^0.2.0"
+systemd-python = {version = "^235", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
 ruff = "^0.6.2"
 mypy = "^1.11.0"
+
+[tool.poetry.extras]
+systemd = ["systemd-python"]
 
 [tool.ruff.format]
 quote-style = "single"

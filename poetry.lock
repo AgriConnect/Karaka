@@ -1056,6 +1056,16 @@ files = [
 Jinja2 = ">=3.0.0,<4.0.0"
 
 [[package]]
+name = "systemd-python"
+version = "235"
+description = "Python interface for libsystemd"
+optional = true
+python-versions = "*"
+files = [
+    {file = "systemd-python-235.tar.gz", hash = "sha256:4e57f39797fd5d9e2d22b8806a252d7c0106c936039d1e71c8c6b8008e695c0a"},
+]
+
+[[package]]
 name = "tortoise-orm"
 version = "0.21.5"
 description = "Easy async ORM for python, built with relations in mind"
@@ -1212,4 +1222,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "9ea7da0f6f90c99884f5ab26ec60d8fe2fcd1fa5fc3a5a42e546dd5624bed718"
+content-hash = "9f998bfe02fb6354ea0f32a0b6d18cf73890ff0fe2d8fec4c7c5da8354d23ab4"
