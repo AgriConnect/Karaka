@@ -22,6 +22,8 @@ from alarmbot.loghandlers import ColorizedStderrHandler
 # Configure logging
 INSIDE_SYSTEMD = bool(importlib.util.find_spec('systemd')) and is_connected_journald()
 PROD_LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
     'formatters': {
         'tiny': {
             'format': '%(message)s',
