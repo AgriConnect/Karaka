@@ -24,9 +24,9 @@ logger.handlers.append(ColorizedStderrHandler())
 @click.option('-s', '--socket-path', type=click.Path())
 @click.argument('port', default=8006, type=int)
 def main(socket_path, port):
-    from alarmbot.common import bot
+    from alarmbot.common import bot, dp
     from alarmbot.views import app
-    from alarmbot.receptionist import dp, on_startup, router
+    from alarmbot.receptionist import on_startup, router
     
     logger.level = logbook.DEBUG
     logging.basicConfig(level=logging.INFO)
