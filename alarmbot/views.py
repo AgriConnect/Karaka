@@ -39,11 +39,12 @@ def json_response(data: BaseModel, status=HTTPStatus.OK) -> Response:
 
 
 class UserView(PydanticView):
-    async def get(self, username: str) -> Response:
+    async def get(self, username: str, /) -> Response:
         try:
             user = await User.get(username=username)
         except DoesNotExist:
-            return HTTPNotFound()
+            logger.info('{} not found', username)
+            return HTTPNotFound(text=f'{username} not found')
         logger.info('User {}', user)
         user_dto = await UserDto.from_tortoise_orm(user)
         return json_response(user_dto)
@@ -83,5 +84,6 @@ app.on_cleanup.append(close_orm)
 
 app.middlewares.append(basic_auth_middleware(('/users',), dict(config.API_USERS)))
 
-app.router.add_view('/users/{username}', UserView)
+app.router.add_get('/users/{username}', UserView)
+app.router.add_view('/users', UserView)
 app.router.add_post('/users/{username}/message', post_user_message)

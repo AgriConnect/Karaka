@@ -17,7 +17,6 @@ from alarmbot.loghandlers import ColorizedStderrHandler
 
 # Configure logging
 logger = Logger(__name__)
-logger.handlers.append(ColorizedStderrHandler())
 
 
 @click.command()
@@ -38,6 +37,8 @@ def main(socket_path, port):
     logger.info('Registered webwook handlers at {} for bot.', WEBHOOK_PATH)
     # Mount dispatcher startup and shutdown hooks to aiohttp application
     setup_application(app, dp, bot=bot)
+    ColorizedStderrHandler().push_application()
+    logger.debug('Routes: {}', app.router.routes()._routes)
     token_head = bot.token.split(':')[0]
     if socket_path:
         # Make socket file writable by Nginx

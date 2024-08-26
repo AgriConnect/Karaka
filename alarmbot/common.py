@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from logbook.compat import LoggingHandler
 from aiohttp.web import Application
 from aiogram import Bot, Dispatcher
 from aiogram.utils.i18n import I18n
@@ -20,4 +19,3 @@ dp = Dispatcher()
 i18n = I18n(path=LOCALES_DIR, default_locale='en', domain=PROJECT_NAME)
 i18n_middleware = SimpleI18nMiddleware(i18n)
 
-LoggingHandler().push_application()

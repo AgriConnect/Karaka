@@ -309,6 +309,21 @@ files = [
 ]
 
 [[package]]
+name = "chameleon-log"
+version = "0.2.0"
+description = "Python colored logging setup which adapts to environment"
+optional = false
+python-versions = ">=3.6,<4.0"
+files = [
+    {file = "chameleon-log-0.2.0.tar.gz", hash = "sha256:88c77b6b83dba2357d865d58595a083e25067682c93c2a0d898e983bdb1b9801"},
+    {file = "chameleon_log-0.2.0-py3-none-any.whl", hash = "sha256:a148f1341f9cb07e8f83138b1407602472095a7836362546b3216b588a7cb32b"},
+]
+
+[package.dependencies]
+logbook = ">=1.5.3,<2.0.0"
+single-version = ">=1.5.1,<2.0.0"
+
+[[package]]
 name = "click"
 version = "8.1.7"
 description = "Composable command line interface toolkit"
@@ -1016,6 +1031,17 @@ files = [
 ]
 
 [[package]]
+name = "single-version"
+version = "1.6.0"
+description = "Small utility to define version string for Poetry-style Python project."
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "single_version-1.6.0-py3-none-any.whl", hash = "sha256:67a2734e728b9554750e867b33591f3ad9509ccb851bb3047ced7bfe68429ecd"},
+    {file = "single_version-1.6.0.tar.gz", hash = "sha256:3b1fb6e9bd2c88268948d9191c78b63ddd3c07554c1f07cd8a85aedf2486e4fc"},
+]
+
+[[package]]
 name = "swagger-ui-bundle"
 version = "1.1.0"
 description = "Swagger UI bundled for usage with Python"
@@ -1186,4 +1212,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "1421608c81aca0f00ff67a20d0c9ba127c9fe6609f77fe9b0bedf825fa551629"
+content-hash = "9ea7da0f6f90c99884f5ab26ec60d8fe2fcd1fa5fc3a5a42e546dd5624bed718"
