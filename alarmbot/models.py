@@ -1,7 +1,7 @@
 
 from tortoise.models import Model
 from tortoise import Tortoise, fields
-from .conf import config
+from .conf import config, TORTOISE_ORM
 
 
 class Farm(Model):
@@ -28,4 +28,4 @@ class User(Model):
 
 
 async def init_db():
-    await Tortoise.init(config.TORTOISE_ORM )
+    await Tortoise.init(TORTOISE_ORM )
