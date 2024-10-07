@@ -18,6 +18,7 @@ asyncpg = "^0.29.0"
 aiohttp-pydantic = "^2.2.1"
 chameleon-log = "^0.2.0"
 systemd-python = {version = "^235", optional = true}
+aerich = "^0.7.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
@@ -42,6 +43,12 @@ module = [
   "aiohttp_basicauth_middleware.*",
 ]
 ignore_missing_imports = true
+
+
+[tool.aerich]
+tortoise_orm = "alarmbot.conf.TORTOISE_ORM"
+location = "./migrations"
+src_folder = "./."
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
