@@ -1,5 +1,5 @@
 [Unit]
-Description=AlarmBot's API server
+Description=Karaka's API server
 After=network-online.target
 
 [Service]
@@ -7,13 +7,13 @@ User=web
 Group=web
 
 Type=simple
-WorkingDirectory=/home/web/AlarmBot/alarmbot
-RuntimeDirectory=alarmbot
+WorkingDirectory=/opt/Karaka/karaka
+RuntimeDirectory=karaka
 RuntimeDirectoryPreserve=yes
-ExecStart=/home/web/AlarmBot/venv/bin/python3 runserver.py -s /run/alarmbot/api.sock
+ExecStart=/opt/Karaka/venv/bin/python3 runserver.py -s /run/karaka/api.sock
 TimeoutStopSec=20
 Restart=on-failure
-RestartSec=2
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target

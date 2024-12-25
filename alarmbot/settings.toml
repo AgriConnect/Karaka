@@ -1,5 +1,5 @@
 [default]
-DB_NAME = 'alarmbot'
+DB_NAME = 'karaka'
 TELEGRAM_TOKEN = ''
 
 API_USERS = []

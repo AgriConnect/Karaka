@@ -8,7 +8,7 @@ from aiogram.utils.i18n.middleware import SimpleI18nMiddleware
 from .conf import config
 
 
-PROJECT_NAME = 'alarmbot'
+PROJECT_NAME = 'karaka'
 LOCALES_DIR = Path(__file__).parent.parent / 'locales'
 
 app = Application()

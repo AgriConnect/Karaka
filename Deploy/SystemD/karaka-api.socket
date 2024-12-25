@@ -1,8 +1,8 @@
 [Unit]
-Description=AlarmBot's API server socket
+Description=Karaka's API server socket
 
 [Socket]
-ListenStream=/run/alarmbot/api.sock
+ListenStream=/run/karaka/api.sock
 SocketUser=web
 SocketGroup=web
 

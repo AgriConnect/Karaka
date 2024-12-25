@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "alarmbot"
+name = "karaka"
 version = "0.2.0"
 description = ""
 authors = ["Nguyễn Hồng Quân <ng.hong.quan@gmail.com>"]
