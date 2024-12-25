@@ -4,7 +4,7 @@ After=network-online.target
 
 [Service]
 User=web
-Group=web
+Group=www-data
 
 Type=simple
 WorkingDirectory=/opt/Karaka/karaka
